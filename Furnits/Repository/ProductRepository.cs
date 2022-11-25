@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Furnits.Repository
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
     }
 }
