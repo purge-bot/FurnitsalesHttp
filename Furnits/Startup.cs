@@ -1,7 +1,10 @@
+using Furnits.Data;
 using Furnits.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +28,15 @@ namespace Furnits
         {
             services.AddControllersWithViews();
             services.AddMvc(option => option.EnableEndpointRouting = false);
+
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+
+            services.AddDbContext<AppIdentityDbContext>(option => option.UseNpgsql(
+                Configuration["Data:FurnitsProducts:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,6 +48,7 @@ namespace Furnits
 
             app.UseStaticFiles();
             app.UseStatusCodePages();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
