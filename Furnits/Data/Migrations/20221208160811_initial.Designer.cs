@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Furnits.Data.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20221206141419_initial")]
+    [Migration("20221208160811_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
