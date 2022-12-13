@@ -1,7 +1,12 @@
+using Furnits.Data;
+using Furnits.Models;
+using Furnits.Models.Users;
 using Furnits.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +30,16 @@ namespace Furnits
         {
             services.AddControllersWithViews();
             services.AddMvc(option => option.EnableEndpointRouting = false);
+
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+
+            services.AddDbContext<AppIdentityDbContext>(option => option.UseNpgsql(
+                Configuration["Data:FurnitsProducts:ConnectionString"]));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/account/login");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,7 +51,10 @@ namespace Furnits
 
             app.UseStaticFiles();
             app.UseStatusCodePages();
-            app.UseMvc();
+            app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
+
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
