@@ -1,4 +1,6 @@
 using Furnits.Data;
+using Furnits.Models;
+using Furnits.Models.Users;
 using Furnits.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,9 +36,10 @@ namespace Furnits
 
             services.AddDbContext<AppIdentityDbContext>(option => option.UseNpgsql(
                 Configuration["Data:FurnitsProducts:ConnectionString"]));
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/account/login");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,7 +52,9 @@ namespace Furnits
             app.UseStaticFiles();
             app.UseStatusCodePages();
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
+
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
