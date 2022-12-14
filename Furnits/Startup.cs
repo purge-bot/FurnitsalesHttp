@@ -31,6 +31,9 @@ namespace Furnits
             services.AddControllersWithViews();
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
+            services.AddDbContext<AppDbContext>(option => option.UseNpgsql(
+                Configuration["Data:FurnitsProducts:ConnectionString"]));
+
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
 

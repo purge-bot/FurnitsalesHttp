@@ -7,5 +7,6 @@ namespace Furnits.Models.Products
 {
     public class ProductType
     {
+
     }
 }
