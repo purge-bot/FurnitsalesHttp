@@ -18,6 +18,7 @@ namespace Furnits.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Divan> Divans { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
