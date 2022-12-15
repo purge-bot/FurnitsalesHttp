@@ -1,0 +1,10 @@
+﻿@model EditOrder
+<form asp-action="EditOrder" method="post">
+    <input type="hidden" name="OrderId" value="@Model.OrderId" />
+    <div>
+        <label asp-for="ManagerName"></label>
+        <input asp-for="ManagerName" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

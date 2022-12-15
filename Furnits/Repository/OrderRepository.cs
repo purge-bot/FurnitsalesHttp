@@ -11,13 +11,14 @@ namespace Furnits.Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        private AppDbContext context;
+        public AppDbContext Context { get; }
         public OrderRepository(AppDbContext ctx)
         {
-            context = ctx;
+            Context = ctx;
         }
-        public IQueryable<Product> Products => context.Products;
-        public IQueryable<Order> Orders => context.Orders;
-        public IQueryable<Divan> Divans => context.Divans;
+        public IQueryable<Product> Products => Context.Products;
+        public IQueryable<Order> Orders => Context.Orders;
+        public IQueryable<Divan> Divans => Context.Divans;
+
     }
 }

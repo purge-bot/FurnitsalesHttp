@@ -11,6 +11,8 @@ namespace Furnits.Repository
 {
     public interface IOrderRepository
     {
+        public AppDbContext Context { get; }
+
         public IQueryable<Product> Products { get; }
         public IQueryable<Order> Orders { get; }
         public IQueryable<Divan> Divans { get; }
