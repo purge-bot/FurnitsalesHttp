@@ -16,5 +16,8 @@ namespace Furnits.Models.Products
         public int Width { get; set; }
         public ICollection<Order> Orders { get; set; }
         public Divan Divan { get; set; }
+
+        public int ProductTypeId { get; set; }
+        public ProductType ProductType { get; set; }
     }
 }
