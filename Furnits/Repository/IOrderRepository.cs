@@ -16,5 +16,6 @@ namespace Furnits.Repository
         public IQueryable<Product> Products { get; }
         public IQueryable<Order> Orders { get; }
         public IQueryable<Divan> Divans { get; }
+        public IQueryable<ProductType> ProductTypes { get; }
     }
 }

@@ -75,5 +75,25 @@ namespace Furnits.Controllers
 
             return View(result);
         }
+
+        public IActionResult CreateProduct()
+        {
+            return View();
+        }
+
+        public IActionResult TypeList()
+        {
+            return View(_repository.ProductTypes);
+        }
+
+
+        public IActionResult CreateProductType()
+        {
+            return View();
+        }
+
+
+
+
     }
 }
